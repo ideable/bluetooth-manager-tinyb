@@ -66,15 +66,17 @@ final class NativesLoader {
 
     static boolean isSupportedEnvironment() {
         LOGGER.debug("OS name: {}; OS arch: {}", getOsName(), getOsArch());
-        LOGGER.debug("isLinux: {}; isARM6: {}; isX86_64: {}; isX86_32: {}",
-                isLinux(), isARM6(), isX86_64(), isX86_32());
+        LOGGER.debug("isLinux: {}; isARM6: {}; isAarch64: {}; isX86_64: {}; isX86_32: {}",
+                isLinux(), isARM6(), isAarch64(), isX86_64(), isX86_32());
         //TODO add some checks for Bluez versions, e.g. that it is greater than v4.43
-        return isLinux() && (isARM6() || isX86_64() || isX86_32());
+        return isLinux() && (isARM6() || isAarch64() || isX86_64() || isX86_32());
     }
 
     static String getLibFolder() throws UnsupportedOperationException {
         if (isARM6()) {
             return "/native/arm/armv6";
+        } else if (isAarch64()) {
+            return "/native/arm/aarch64";
         } else if (isX86_64()) {
             return "/native/linux/x86_64";
         } else if (isX86_32()) {
@@ -86,6 +88,10 @@ final class NativesLoader {
 
     static boolean isARM6() {
         return getOsArch().startsWith("arm");
+    }
+
+    static boolean isAarch64() {
+        return "aarch64".equals(getOsArch());
     }
 
     static boolean isLinux() {

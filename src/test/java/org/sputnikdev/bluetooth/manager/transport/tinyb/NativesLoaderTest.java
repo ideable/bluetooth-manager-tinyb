@@ -21,7 +21,7 @@ public class NativesLoaderTest {
         assertFalse(NativesLoader.isSupportedEnvironment());
         System.setProperty("os.arch", "aarch64");
         System.setProperty("os.name", "linux blah blah v1");
-        assertFalse(NativesLoader.isSupportedEnvironment());
+        assertTrue(NativesLoader.isSupportedEnvironment());
     }
 
     @Test
@@ -52,12 +52,12 @@ public class NativesLoaderTest {
         assertEquals("/native/linux/x86_32", NativesLoader.getLibFolder());
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void testGetLibFolderAarch64() throws Exception {
-        System.setProperty("os.name", "linux blah blah v1");
-        System.setProperty("os.arch", "aarch64");
-        NativesLoader.getLibFolder();
-    }
+//    @Test(expected = UnsupportedOperationException.class)
+//    public void testGetLibFolderAarch64() throws Exception {
+//        System.setProperty("os.name", "linux blah blah v1");
+//        System.setProperty("os.arch", "aarch64");
+//        NativesLoader.getLibFolder()
+//    }
 
     @Test
     public void testIsARM() throws Exception {
